@@ -1,0 +1,13 @@
+_base_: ../base.yaml
+name: cartpole
+env: {env_id: CartPole-v1, n_envs: 8}
+teacher:
+  total_timesteps: 300000
+  target_reward: 500.0          # Gymnasium CartPole-v1 reward_threshold
+  n_eval_episodes: 20
+  seeds: [0, 1, 2]
+  verify_episodes: 50
+  verify_eval_seeds: [100, 101, 102, 103, 104]
+  verify_min_mean: 490.0
+data: {n_steps: 50000}
+eval: {noise_sigmas: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 6.0]}

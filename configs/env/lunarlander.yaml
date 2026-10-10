@@ -1,0 +1,23 @@
+_base_: ../base.yaml
+name: lunarlander
+env:
+  env_id: LunarLander-v3
+  n_envs: 16
+  noise_dims: [0, 1, 2, 3, 4, 5]   # x, y, vx, vy, angle, ang_vel; dims 6-7 are binary leg contacts
+teacher:
+  total_timesteps: 1500000
+  target_reward: 250.0          # erken durdurma eşiği (resmi "çözüldü" eşiği 200)
+  n_eval_episodes: 20
+  seeds: [0, 1, 2]
+  verify_episodes: 50
+  verify_eval_seeds: [100, 101, 102, 103, 104]
+  verify_min_mean: 200.0        # bağımsız doğrulamada kabul eşiği
+  hyperparams:
+    n_steps: 1024
+    batch_size: 64
+    gae_lambda: 0.98
+    gamma: 0.999
+    n_epochs: 4
+    ent_coef: 0.01
+data: {n_steps: 150000}
+fuzzy: {n_rules: 24}

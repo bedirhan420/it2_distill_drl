@@ -1,0 +1,6 @@
+seed: 0
+out_dir: results
+fuzzy: {membership: it2_uncertain_sigma, tnorm: product, reducer: nie_tan, n_rules: 8, consequent_order: 1,
+        initializer: kmeans, fou_init: 0.3, fou_learnable: true}
+train: {epochs: 200, batch_size: 512, lr: 0.003, patience: 20, train_noise_sigma: 0.0}
+eval:  {noise_sigmas: [0.0, 0.05, 0.1, 0.2, 0.3, 0.5], n_episodes: 30, seeds: [0,1,2,3,4,5,6,7,8,9]}

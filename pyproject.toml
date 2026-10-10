@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "it2distill"
+version = "0.1.0"
+description = "Distilling DRL policies into noise-robust Interval Type-2 fuzzy systems"
+requires-python = ">=3.9"
+dependencies = [
+  "torch>=2.1", "numpy", "pandas", "scipy", "scikit-learn", "pyyaml",
+  "gymnasium[box2d]>=0.29", "stable-baselines3>=2.2", "matplotlib", "tqdm",
+]
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy", "pytest-cov"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+[tool.pytest.ini_options]
+testpaths = ["tests"]

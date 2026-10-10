@@ -1,0 +1,11 @@
+torch>=2.1
+numpy
+pandas
+scipy
+scikit-learn
+pyyaml
+gymnasium[box2d]>=0.29
+stable-baselines3>=2.2
+matplotlib
+tqdm
+pytest
