@@ -9,5 +9,9 @@ teacher:
   verify_episodes: 50
   verify_eval_seeds: [100, 101, 102, 103, 104]
   verify_min_mean: 490.0
-data: {n_steps: 50000}
+data:
+  n_steps: 50000
+  behavior_mix: mixed
+  collection_epsilon: 0.1
+  behavior_noise_sigmas: [1.0, 2.0, 3.0]   # PPO collapses around sigma ~ 2-3 (WP1 measurement)
 eval: {noise_sigmas: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 6.0]}

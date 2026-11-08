@@ -19,5 +19,9 @@ teacher:
     gamma: 0.999
     n_epochs: 4
     ent_coef: 0.01
-data: {n_steps: 150000}
+data:
+  n_steps: 150000
+  behavior_mix: mixed
+  collection_epsilon: 0.1
+  behavior_noise_sigmas: [0.25, 0.5, 1.0]  # PLACEHOLDER: recalibrate after `make verify-teacher-noise ENV=lunarlander`
 fuzzy: {n_rules: 24}

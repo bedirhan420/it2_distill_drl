@@ -8,8 +8,9 @@ ablations:
   A5_type_reducer:         {grid: {fuzzy.reducer: [nie_tan, bounds_mixing, weighted_average]}}
   A6_consequent_order:     {grid: {fuzzy.consequent_order: [0, 1]}}
   A6b_tnorm:               {grid: {fuzzy.tnorm: [product, min]}}
-  A7_noise_aware_training: {grid: {train.train_noise_sigma: [0.0, 0.05, 0.1, 0.2]}}   # also run for T1
+  A7_noise_aware_training: {grid: {train.train_noise_sigma: [0.0, 0.5, 1.0, 2.0]}}   # run for T1 and IT2
   A8_loss:                 {grid: {train.loss: [auto, kl_soft]}}
   A9_dagger_rounds:        {grid: {data.dagger_rounds: [0, 1, 3, 5]}}
   A10_regularisers:        {grid: {train.lambda_fou: [0.0, 0.01, 0.1], train.lambda_sparsity: [0.0, 0.01]}}
   A11_data_size:           {grid: {data.n_steps: [5000, 10000, 25000, 50000, 100000]}}
+  A12_behavior_mix:        {grid: {data.behavior_mix: [clean, eps, noisy, mixed]}}

@@ -8,6 +8,8 @@ from dataclasses import dataclass, field
 class EnvConfig:
     env_id: str = "CartPole-v1"
     n_envs: int = 8
+    # Observation dims that receive noise (None = all). Use it to exclude binary/categorical
+    # features, e.g. LunarLander leg-contact flags (dims 6, 7).
     noise_dims: tuple[int, ...] | None = None
 
 
@@ -16,21 +18,29 @@ class TeacherConfig:
     algo: str = "PPO"
     total_timesteps: int = 300_000
     target_reward: float = 500.0
-    n_eval_episodes: int = 20
+    n_eval_episodes: int = 20                 # in-training EvalCallback (only for model selection)
     hyperparams: dict = field(default_factory=dict)
+    # --- multi-seed teachers (protocol: >= 3 independent teachers) ---
     seeds: tuple[int, ...] = (0, 1, 2)
+    # --- independent post-hoc verification (scripts/07_eval_teacher.py) ---
     verify_episodes: int = 50                 # episodes per eval seed
     verify_eval_seeds: tuple[int, ...] = (100, 101, 102, 103, 104)  # disjoint from training seeds
-    verify_min_mean: float = 0.0  
+    verify_min_mean: float = 0.0              # 0 -> derived as 0.98 * target_reward
 
 
 @dataclass
 class DataConfig:
     n_steps: int = 50_000
     teacher_deterministic: bool = True
-    # Behaviour-policy noise at collection time -> broader state coverage
-    collection_epsilon: float = 0.05
-    splits: tuple[float, float, float] = (0.7, 0.15, 0.15)
+    # Behaviour mix (preset name, see data/behaviors.py): clean | eps | noisy | mixed
+    behavior_mix: str = "mixed"
+    collection_epsilon: float = 0.1           # 'epsilon' behaviour: P(random action)
+    # 'noisy' behaviour: teacher acts on obs + sigma_rel*std*z (sigma drawn per episode);
+    # the stored observation is CLEAN and the label is the teacher action on the CLEAN state.
+    behavior_noise_sigmas: tuple[float, ...] = (1.0, 2.0, 3.0)
+    splits: tuple[float, float, float] = (0.7, 0.15, 0.15)   # fractions of EPISODES (train, val, test)
+    save_soft_targets: bool = True            # teacher action probabilities (discrete) for KL distillation
+    obs_std_episodes: int = 30                # episodes used to estimate the clean-state std
     dagger_rounds: int = 0  # 0 = pure behavioural cloning
 
 
